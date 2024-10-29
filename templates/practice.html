@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary API</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            perform_query();
+        });
+
+        function perform_query() {
+            let word = 'apple';
+            let api_key = '3e0a68a9-2fdc-4b85-9e8e-64488a147c6d';
+            let root_url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json`;
+
+            // Membuat URL akhir dengan kata dan kunci API
+            let final_url = `${root_url}/${word}?key=${api_key}`;
+            
+            // Melakukan permintaan AJAX
+            $.ajax({
+                type: 'GET',
+                url: final_url,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                },
+            });
+        }
+
+
+
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
