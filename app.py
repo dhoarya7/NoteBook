@@ -1,24 +1,30 @@
-from flask import (
-    Flask,
-    request,
-    render_template,
-    redirect,
-    url_for,
-    jsonify
-)
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+from flask import Flask, request, render_template, jsonify
 from pymongo import MongoClient
 import requests
 from datetime import datetime
 from bson import ObjectId
 
+# environment variabel dri env
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
-app= Flask(__name__)
+# nilai dari file .env
+mongo_password = os.getenv("MONGO_PASSWORD")
+mongo_user = os.getenv("MONGO_USER")
+mongo_host = os.getenv("MONGO_HOST")
+mongo_db_name = os.getenv("MONGO_DB")
+api_key = os.getenv("DICTIONARY_API_KEY")
 
-password='sparta'
-cxn_str = f'mongodb://ridhoarya207:{password}@cluster0-shard-00-00.t84zn.mongodb.net:27017,cluster0-shard-00-01.t84zn.mongodb.net:27017,cluster0-shard-00-02.t84zn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ld9kmy-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0'
+# inisial flask
+app = Flask(__name__)
+
+# Setup MongoDB connection
+cxn_str = f'mongodb://{mongo_user}:{mongo_password}@{mongo_host}/?ssl=true&replicaSet=atlas-ld9kmy-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0'
 client = MongoClient(cxn_str)
-
-db = client.dbsparta_plus_week2
+db = client[mongo_db_name]
 
 @app.route('/')
 def main():
